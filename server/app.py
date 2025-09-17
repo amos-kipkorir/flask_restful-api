@@ -52,13 +52,13 @@ class Trainers(Resource):
 
 
 class TrainerById(Resource):
-    def get(self,id):
+    def get(self,trainer_id):
         trainer = db.session.query(Trainer).get(trainer_id)
         resp = make_response(trainer.to_dict(), 200)
         return resp
 
     def patch(self,id):
-        trainer = db.session.query(Trainer).get(trainer_id)
+        trainer = db.session.query(Trainer).get(id)
         for attr in request.json:
             setattr(trainer,attr,request.json.get(attr))
 
@@ -101,5 +101,5 @@ def handle_exception(e):
 
 api.add_resource(Welcome, '/')
 api.add_resource(Trainers,'/trainers')
-api.add_resource(TrainerById,"/get_trainer_by_id/<int:id>")
+api.add_resource(TrainerById,"/trainers/<int:id>")
 
